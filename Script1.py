@@ -12,7 +12,7 @@ def acessar_video_julio_cocielo():
     options.add_argument(r'--user-data-dir=C:\Users\Victor\AppData\Local\Google\Chrome\User Data')
     options.add_argument(r'--profile-directory=Default')
 
-    # Inicia o Chrome com o perfil do usuário
+
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     try:
@@ -25,15 +25,29 @@ def acessar_video_julio_cocielo():
         search_box.send_keys(Keys.RETURN)
         time.sleep(3)
 
-        # Clica no primeiro vídeo
+
         first_video = driver.find_element(By.XPATH, "//ytd-video-renderer[1]//a[@id='thumbnail']")
         first_video.click()
         time.sleep(5)
+
+        pular_anuncio(driver)
 
     except Exception as e:
         print(f"Erro: {e}")
     finally:
         time.sleep(100)
         driver.quit()
+
+def pular_anuncio(driver):
+    while True:
+        try:
+            botao_pular = driver.find_element(By.CLASS_NAME, "ytp-skip-ad-button__text")
+            botao_pular.click()
+            print("Anúncio pulado!")
+            break
+        except:
+            pass
+        
+        time.sleep(1)
 
 acessar_video_julio_cocielo()
