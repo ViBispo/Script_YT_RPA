@@ -69,7 +69,7 @@ Antes de rodar o código, você precisa:
 5. **Mantém o vídeo rodando e depois fecha o navegador**.
 
 ### 🔄 Como a Automação Pula Anúncios?
-- O script usa **Selenium** para procurar o botão de **"Pular anúncio"** (`ytp-ad-skip-button`).
+- O script usa **Selenium** para procurar o botão de **"Pular anúncio"** (`ytp-skip-ad-button__text`).
 - Se o botão aparecer, o Selenium **clica automaticamente** para pular o anúncio.
 
 ---
