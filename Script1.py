@@ -5,23 +5,20 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# Configuração do Selenium para abrir o Chrome com o perfil do usuário
 def iniciar_driver():
     options = webdriver.ChromeOptions()
     
-    options.add_argument(r'--user-data-dir=C:\Users\Victor\AppData\Local\Google\Chrome\User Data')
+    # Ajuste aqui para o caminho do seu perfil
+    options.add_argument(r'--user-data-dir=C:\\Users\\Victor\\AppData\\Local\\Google\\Chrome\\User Data')
     options.add_argument(r'--profile-directory=Default')
-
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     return driver
 
-# Função para buscar um vídeo no YouTube
 def buscar_video_youtube(driver, termo_busca):
     driver.get("https://www.youtube.com")
     time.sleep(2)
 
-    # Encontra a barra de pesquisa e insere o termo
     search_box = driver.find_element(By.NAME, "search_query")
     search_box.send_keys(termo_busca)
     search_box.send_keys(Keys.RETURN)
@@ -32,21 +29,39 @@ def buscar_video_youtube(driver, termo_busca):
     time.sleep(5)
 
     pular_anuncio(driver)
+    
+    aguardar_fim_video(driver)
 
-# Função para pular anúncios automaticamente
 def pular_anuncio(driver):
     while True:
         try:
             botao_pular = driver.find_element(By.CLASS_NAME, "ytp-skip-ad-button__text")
             botao_pular.click()
-            print("🔥 Anúncio pulado!")
-            break  
+            print("Anúncio pulado!")
+            break
         except:
-            pass  
+            pass
         
         time.sleep(1)
 
-# 📜 Menu interativo para o usuário escolher a ação
+def aguardar_fim_video(driver):
+    while True:
+        try:
+            # Obtém a duração total e o tempo atual do vídeo
+            tempo_total = driver.execute_script("return document.querySelector('video').duration")
+            tempo_atual = driver.execute_script("return document.querySelector('video').currentTime")
+            
+            print(f"Tempo atual: {tempo_atual:.2f} / {tempo_total:.2f}")
+
+            # Se o vídeo estiver perto do fim (1 segundo de diferença), retorna ao menu
+            if tempo_total - tempo_atual < 1:
+                print("O vídeo terminou! Voltando ao menu...")
+                break
+        except:
+            pass
+
+        time.sleep(5)
+
 def menu_interativo():
     driver = iniciar_driver()
     while True:
@@ -65,5 +80,4 @@ def menu_interativo():
         else:
             print("❌ Opção inválida! Tente novamente.")
 
-# Inicia o menu interativo
 menu_interativo()
