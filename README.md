@@ -1,6 +1,6 @@
 # 🚀 Automação com Selenium para Assistir Vídeos no YouTube
 
-Este projeto usa **Selenium** para abrir o YouTube, pesquisar um vídeo, clicar no primeiro resultado e, caso haja anúncios, pular automaticamente. Além disso, agora possui um **menu interativo** que permite buscar qualquer vídeo sem precisar reiniciar o script.
+Este projeto usa **Selenium** para abrir o YouTube, pesquisar um vídeo, clicar no primeiro resultado e, caso haja anúncios, pular automaticamente. Além disso, agora possui um **menu interativo** que permite buscar qualquer vídeo sem precisar reiniciar o script, e aguarda o fim do vídeo antes de retornar ao menu.
 
 ## 📌 Funcionalidades
 - Abre o **Google Chrome** com o perfil do usuário logado.
@@ -8,7 +8,7 @@ Este projeto usa **Selenium** para abrir o YouTube, pesquisar um vídeo, clicar 
 - Pesquisa **qualquer vídeo ou canal** no YouTube.
 - Clica no primeiro vídeo da pesquisa.
 - **Verifica e pula anúncios automaticamente**, caso apareçam.
-- Mantém o navegador aberto por um tempo para assistir ao vídeo.
+- **Monitora o tempo do vídeo** e retorna ao menu quando o vídeo termina.
 - Permite ao usuário fazer várias buscas sem reiniciar o script.
 
 ---
@@ -46,9 +46,9 @@ Antes de rodar o código, você precisa:
    - No código, substitua:
      ```python
      options.add_argument(r'--user-data-dir=C:\Users\SEU_USUARIO\AppData\Local\Google\Chrome\User Data')
-     options.add_argument(r'--profile-directory=Profile 1')
+     options.add_argument(r'--profile-directory=Default')
      ```
-   - Se necessário, altere "Profile 1" para **Default, Profile 2, etc.**
+   - Se necessário, altere "Default" para **Profile 1, Profile 2, etc.**
 
 3. **Execute o script**:
    ```bash
@@ -72,12 +72,15 @@ Antes de rodar o código, você precisa:
 2. **Exibe um menu interativo para o usuário escolher entre buscar um vídeo ou sair**.
 3. **Pesquisa um vídeo no YouTube e clica no primeiro resultado**.
 4. **Verifica se há um botão "Pular anúncio" e clica nele**.
-5. **Permite ao usuário buscar quantos vídeos quiser sem reiniciar o programa**.
-6. **Fecha o navegador ao sair do menu**.
+5. **Monitora o tempo do vídeo usando JavaScript para detectar quando ele termina**.
+6. **Retorna ao menu automaticamente após o vídeo finalizar.**
+7. **Permite múltiplas buscas sem reiniciar o script.**
+8. **Fecha o navegador ao sair do menu.**
 
 ### 🔄 Como a Automação Pula Anúncios?
-- O script usa **Selenium** para procurar o botão de **"Pular anúncio"** (`ytp-ad-skip-button`).
+- O script usa **Selenium** para procurar o botão de **"Pular anúncio"** (`ytp-skip-ad-button__text`).
 - Se o botão aparecer, o Selenium **clica automaticamente** para pular o anúncio.
+- Caso não haja anúncio, ele aguarda o vídeo até o final normalmente.
 
 ---
 
@@ -94,6 +97,7 @@ Antes de rodar o código, você precisa:
 - [ ] Criar uma interface gráfica com `Tkinter` para facilitar a interação.
 - [ ] Adicionar suporte a outros navegadores além do Chrome.
 - [ ] Melhorar a detecção e o fechamento automático de anúncios.
+- [ ] Permitir que o usuário defina o tempo de exibição ou avance manualmente.
 
 ---
 
@@ -106,4 +110,3 @@ Se quiser melhorar esse projeto, sinta-se à vontade para abrir um **Pull Reques
 Este projeto é de código aberto e pode ser usado livremente para aprendizado e experimentação.
 
 🚀 **Divirta-se automatizando o YouTube!**
-
